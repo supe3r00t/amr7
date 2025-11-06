@@ -1,57 +1,40 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'آمر سبعة') }}</title>
-    @vite('resources/css/app.css')
-    <style>
-        body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            font-family: 'Tajawal', sans-serif;
-            color: #f8fafc;
-        }
-        .navbar {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        .btn-primary {
-            background-color: #00BFA5;
-            transition: 0.3s;
-        }
-        .btn-primary:hover {
-            background-color: #00A58C;
-        }
-        .card {
-            background: white;
-            color: #1e293b;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-    </style>
+
+    @include('components.navbar')  {{-- أعلى الصفحة --}}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@yield('title', 'آمر سبعة | خدمات الشركات')</title>
+    <meta name="description" content="@yield('meta_description', 'تأسيس الشركات، الخدمات القانونية والإدارية في السعودية.')">
+
+    <!-- Bootstrap RTL -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+
+    @stack('head')
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-<!-- 🔹 Navbar -->
-<nav class="navbar flex justify-between items-center px-8 py-4 text-white">
-    <a href="{{ url('/') }}" class="text-2xl font-bold">آمر سبعة</a>
-    <div class="flex gap-6">
-        <a href="{{ url('/') }}" class="hover:text-teal-400">الرئيسية</a>
-        <a href="{{ route('contact') }}" class="hover:text-teal-400">تواصل معنا</a>
-    </div>
-</nav>
+@include('components.navbar')
 
-<!-- 🔹 Content -->
-<main class="flex-1 flex justify-center items-center p-8">
-    <div class="card w-full max-w-3xl p-8">
-        @yield('content')
-    </div>
+<main>
+    @yield('content')
 </main>
 
-<!-- 🔹 Footer -->
-<footer class="text-center py-4 text-gray-400 text-sm">
-    © {{ date('Y') }} آمر سبعة - جميع الحقوق محفوظة.
-</footer>
+@include('components.footer')
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+@stack('scripts')
 </body>
+@include('components.footer')  {{-- آخر الصفحة --}}
+
 </html>
